@@ -31,7 +31,7 @@ namespace _2DGame
         Obstacle hero;
         int heroStartX = 310;
         int heroStartY = 455;
-
+        int lives = 5;
 
         Boolean leftArrowDown, rightArrowDown, upArrowDown, downArrowDown;
 
@@ -244,12 +244,28 @@ namespace _2DGame
 
             drawBrush.Color = Color.Firebrick;
             e.Graphics.FillEllipse(drawBrush, hero.x, hero.y, hero.width, hero.height);
-            
+
+            for (int i = 0; i < lives; i++)
+            {
+                e.Graphics.FillEllipse(drawBrush, (i * 20)+ 10, 10, 20, 20);
+            }
+            Font drawFont = new Font("Trajan", 36);
+            if (lives == 0)
+            {
+                e.Graphics.DrawString("You lose!", drawFont, drawBrush, 100, 350);
+            }
         }
 
         private void gameLoop_Tick(object sender, EventArgs e)
         {
             int tempX = hero.x, tempY = hero.y;
+
+            if (lives == 0)
+            {
+                Refresh();
+                Thread.Sleep(500);
+                lives = 5;
+            }
 
             #region move obstacles
             foreach (Obstacle b in Obs1)
@@ -259,6 +275,7 @@ namespace _2DGame
                 {
                     hero.x = heroStartX;
                     hero.y = heroStartY;
+                    lives--;
                 }
             }
             foreach (Obstacle b in Obs2)
@@ -268,6 +285,7 @@ namespace _2DGame
                 {
                     hero.x = heroStartX;
                     hero.y = heroStartY;
+                    lives--;
                 }
             }
 
@@ -308,16 +326,19 @@ namespace _2DGame
             {
                 hero.x = heroStartX;
                 hero.y = heroStartY;
+                lives--;
             }
             if (hero.y <= 250 && hero.y >= 200 && onlog == false)
             {
                 hero.x = heroStartX;
                 hero.y = heroStartY;
+                lives--;
             }
             if (hero.y <= 300 && hero.y >= 250 && onlog == false)
             {
                 hero.x = heroStartX;
                 hero.y = heroStartY;
+                lives--;
             }
 
             foreach (Obstacle b in Cars1)
@@ -327,6 +348,7 @@ namespace _2DGame
                 {
                     hero.x = heroStartX;
                     hero.y = heroStartY;
+                    lives--;
                 }
             }
             foreach (Obstacle b in Cars2)
@@ -336,6 +358,7 @@ namespace _2DGame
                 {
                     hero.x = heroStartX;
                     hero.y = heroStartY;
+                    lives--;
                 }
             }
             foreach (Obstacle b in Cars3)
@@ -345,6 +368,7 @@ namespace _2DGame
                 {
                     hero.x = heroStartX;
                     hero.y = heroStartY;
+                    lives--;
                 }
             }
 
